@@ -12,7 +12,7 @@ class ListingPatientController extends AbstractController
     /**
      * @Route("/listing/patient", name="app_listing_patient")
      */
-    public function index(): JsonResponse
+    public function index(): Response
     {
 
         $response = JsonResponse::fromJsonString('{
@@ -38,7 +38,6 @@ class ListingPatientController extends AbstractController
                 "dateAjout": "03/03/2022"
             }
         }');
-
         return $response;
     }
 }
