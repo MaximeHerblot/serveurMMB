@@ -1,0 +1,23 @@
+{
+    "3": {
+        "nom": "joe",
+        "prenom": "John",
+        "age": 45,
+        "maladie": "Sida",
+        "dateAjout": "03/03/2022"
+    },
+    "2": {
+        "nom": "joe",
+        "prenom": "Kane",
+        "age": 38,
+        "maladie": "Cancer poumon",
+        "dateAjout": "03/03/2022"
+    },
+    "1": {
+        "nom": "Polo",
+        "prenom": "Marco",
+        "age": 24,
+        "maladie": "Diabetique",
+        "dateAjout": "03/03/2022"
+    }
+}
