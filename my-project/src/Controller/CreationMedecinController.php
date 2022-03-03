@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -14,10 +15,25 @@ class CreationMedecinController extends AbstractController
      */
     public function index(UserPasswordHasherInterface $passwordHasher): Response
     {
-        // $_POST;
-        
-        return $this->render('creation_medecin/index.html.twig', [
-            'controller_name' => 'CreationMedecinController',
-        ]);
+        $user = new User();
+        $post = $_POST;
+        $username = $post['identifiant'];
+        $firstname = $post['prenom'];
+        $lastname = $post['nom'];
+        $hashedPassword = $passwordHasher->hashPassword(
+            $user,
+            $post['password']
+        );
+
+        $user->setUsername($username)
+            ->setFirstname($firstname)
+            ->setLastname($lastname)
+            ->setPassword($hashedPassword);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        $idUser = $user->getId();
+        return new Response($idUser);
     }
 }
