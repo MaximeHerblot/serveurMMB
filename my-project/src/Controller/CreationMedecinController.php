@@ -17,12 +17,12 @@ class CreationMedecinController extends AbstractController
     {
         $user = new User();
         $post = $_POST;
-        $username = $post['identifiant'];
+        $username = $post['username'];
         $firstname = $post['prenom'];
         $lastname = $post['nom'];
         $hashedPassword = $passwordHasher->hashPassword(
             $user,
-            $post['password']
+            $post['mdp']
         );
 
         $user->setUsername($username)

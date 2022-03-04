@@ -45,10 +45,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $lastname;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $age;
 
     public function getId(): ?int
     {
@@ -158,15 +154,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAge(): ?string
-    {
-        return $this->age;
-    }
-
-    public function setAge(string $age): self
-    {
-        $this->age = $age;
-
-        return $this;
-    }
+    
 }
