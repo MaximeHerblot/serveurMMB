@@ -29,7 +29,7 @@ class CreationPatientController extends AbstractController
         $date = new DateTime($PM["dateNaissance"]);
         $patient->setDateNaissance($date);
         $patient->setAge(15);
-        $patient->setMaladie($PM["maladie"]);
+        $patient->setMaladie([$PM["maladie"]]);
 
 
         $user = $doctrine->getRepository(User::class)->find($PM["tokenMedecin"]);
