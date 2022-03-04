@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -14,7 +15,7 @@ class ApiLoginController extends AbstractController
     /**
      * @Route("/api/login", name="api_login")
      */
-    public function index(#[CurrentUser] ?User $user, UserPasswordHasherInterface $passwordHasher ): Response
+    public function index(?User $user, UserPasswordHasherInterface $passwordHasher, ManagerRegistry $doctrine ): Response
     {
 
         if (null === $user) {
@@ -28,6 +29,10 @@ class ApiLoginController extends AbstractController
             $user,
             $user->getId()
         );
+        $user->setAuthToken($token);
+        $em = $doctrine->getManager();
+        $em->persist($user);
+        $em->flush();
         return $this->json([
             'user'  => $user->getUserIdentifier(),
             'token' => $token,

@@ -30,7 +30,7 @@ class CreationPatientController extends AbstractController
         $patient->setMaladie($PM["maladie"]);
 
 
-        $user = $doctrine->getRepository(User::class)->find($PM["idMedecin"]);
+        $user = $doctrine->getRepository(User::class)->find($PM["tokenMedecin"]);
         $patient->setMedecin($user);
         $em->persist($patient);
         $em->flush();

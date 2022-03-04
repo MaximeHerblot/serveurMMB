@@ -52,6 +52,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $patients;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $authToken;
+
     public function __construct()
     {
         $this->patients = new ArrayCollection();
@@ -192,6 +197,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $patient->setMedecin(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthToken(): ?string
+    {
+        return $this->authToken;
+    }
+
+    public function setAuthToken(?string $authToken): self
+    {
+        $this->authToken = $authToken;
 
         return $this;
     }
