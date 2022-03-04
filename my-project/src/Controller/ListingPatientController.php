@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Util\Json;
 
 class ListingPatientController extends AbstractController
 {
@@ -25,12 +26,58 @@ class ListingPatientController extends AbstractController
         // dd($user);
         //$user->getPatients();
         $patients = $user->getPatients()->toArray();
+        $listPatient = [];
+        $i = 0;
+        foreach($patients as $patient){
+            $list = [
+                "id" => $patient->getId(),
+                "nom" => $patient->getNom(),
+                "prenom" => $patient->getPrenom(),
+                "dateNaissance" => $patient->getDateNaissance()->format('Y-m-d'),
+                "age" => $patient->getAge(),
+                "maladie" => $patient->getMaladie(),
+            ];
+
+
+            
+
+
+
+            // foreach ($patient as $intInfo => $info) {
+            //     echo "jfkdlsjfmlsdjqfkl";
+            //     $list[$intInfo] = $info;
+            //     if($intInfo == "medecin"){
+
+            //     }else if("dateNaissance" == $intInfo){
+                    
+            //         $list[$intInfo] = $info->format('Y-m-d H:i:s');
+            //         // $d->format('Y-m-d\TH:i:s.u')
+            //     }
+            // }
+            $listPatient[$i] = $list;
+            $i ++;
+        }
         
+        // return $this->json($patients);
+        // dd($patients);
 
-        dd($patients);
+    //     array:1 [▼
+    //     0 => 
+    //       -id: 1
+    //       -nom: "nom"
+    //       -prenom: "prenom"
+    //       -date_naissance: DateTime @1362614400 {#852 ▶}
+    //       -age: 8
+    //       -maladie: null
+    //       -medecin: App\Entity\User {#768 ▶}
+    //     }
+    //   ]
+
+        // ['0' => ['id'=>1,]]
 
 
-
+        $response = new JsonResponse($listPatient);
+        return $response;
         $response = JsonResponse::fromJsonString('{
             "1" : {
                 "nom": "Doe",
