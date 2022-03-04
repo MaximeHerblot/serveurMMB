@@ -20,10 +20,11 @@ class CreationMedecinController extends AbstractController
         $username = $post['username'];
         $firstname = $post['prenom'];
         $lastname = $post['nom'];
-        $hashedPassword = $passwordHasher->hashPassword(
-            $user,
-            $post['mdp']
-        );
+        $hashedPassword = md5($post['mdp']);
+        // $hashedPassword = $passwordHasher->hashPassword(
+        //     $user,
+        //     $post['mdp']
+        // );
 
         $user->setUsername($username)
             ->setFirstname($firstname)
