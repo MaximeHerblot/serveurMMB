@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Patient;
 use App\Entity\User;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -25,7 +26,8 @@ class CreationPatientController extends AbstractController
         $patient = new Patient();
         $patient->setNom($PM["nom"]);
         $patient->setPrenom($PM["prenom"]);
-        $patient->setDateNaissance($PM["dateNaissance"]);
+        $date = new DateTime($PM["dateNaissance"]);
+        $patient->setDateNaissance($date);
         $patient->setAge($PM["age"]);
         $patient->setMaladie($PM["maladie"]);
 
