@@ -28,7 +28,11 @@ class CreationPatientController extends AbstractController
         $patient->setPrenom($PM["prenom"]);
         $date = new DateTime($PM["dateNaissance"]);
         $patient->setDateNaissance($date);
-        $patient->setAge(15);
+        //Calcul de l'age
+        $currentDate = new DateTime();
+        $age = $currentDate->diff($date)
+            ->format('%Y');
+        $patient->setAge( intval( $age));
         $patient->setMaladie([$PM["maladie"]]);
 
 
