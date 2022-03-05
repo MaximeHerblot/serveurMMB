@@ -16,12 +16,12 @@ class ListingPatientController extends AbstractController
     /**
      * @Route("/listing/patient", name="app_listing_patient")
      */
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine)
     {
         $em = $doctrine->getManager();
-        $PM = $_POST;
-        // $user = $doctrine->getRepository(User::class)->find($PM["idMedecin"]);
-        $user = $doctrine->getRepository(User::class)->find(1);
+        $PM = $_GET;
+        $user = $doctrine->getRepository(User::class)->findOneBy([ "authToken" => $PM["tokenMedecin"]]);
+        // $user = $doctrine->getRepository(User::class)->find(1);
 
         // dd($user);
         //$user->getPatients();
@@ -29,16 +29,18 @@ class ListingPatientController extends AbstractController
         $listPatient = [];
         $i = 0;
         foreach($patients as $patient){
+            $maladie = array_filter($patient->getMaladie());
+            
             $list = [
                 "id" => $patient->getId(),
                 "nom" => $patient->getNom(),
                 "prenom" => $patient->getPrenom(),
-                "dateNaissance" => $patient->getDateNaissance()->format('Y-m-d'),
+                "dateNaissance" => $patient->getDateNaissance()->format('d-m-Y'),
                 "age" => $patient->getAge(),
-                "maladie" => $patient->getMaladie(),
+                "maladie" => count($maladie) > 0 ? implode(", ",$maladie) : "Aucune",
             ];
 
-
+            // return var_dump($patient->getMaladie());
             
 
 

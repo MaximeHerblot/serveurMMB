@@ -32,7 +32,11 @@ class CreationPatientController extends AbstractController
         $patient->setMaladie([$PM["maladie"]]);
 
 
-        $user = $doctrine->getRepository(User::class)->find($PM["tokenMedecin"]);
+        $userRepo = $doctrine->getRepository(User::class);
+        $user = $userRepo->findOneBy([
+            'authToken' => $PM['tokenMedecin'],
+        ]);
+        // ->findOneBy(["auth_token" => $PM["tokenMedecin"]]);
         $patient->setMedecin($user);
         $em->persist($patient);
         $em->flush();
