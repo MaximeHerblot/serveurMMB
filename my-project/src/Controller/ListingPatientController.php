@@ -29,15 +29,20 @@ class ListingPatientController extends AbstractController
         $listPatient = [];
         $i = 0;
         foreach($patients as $patient){
-            $maladie = array_filter($patient->getMaladie());
-            
+            $maladies = array_filter($patient->getMaladie());
+
+            $strMaladie = '';
+            foreach($maladies as $maladie){
+                $strMaladie .= $maladie['maladie'].' : '.$maladie['description'].', '; 
+            }
+            $strMaladie = substr($strMaladie,0,-2);
             $list = [
                 "id" => $patient->getId(),
                 "nom" => $patient->getNom(),
                 "prenom" => $patient->getPrenom(),
-                "dateNaissance" => $patient->getDateNaissance()->format('d-m-Y'),
+                "dateNaissance" => $patient->getDateNaissance()->format('d/m/Y'),
                 "age" => $patient->getAge(),
-                "maladie" => count($maladie) > 0 ? implode(", ",$maladie) : "Aucune",
+                "maladie" => strlen($strMaladie) > 0 ? $strMaladie: "Aucune",
             ];
 
             // return var_dump($patient->getMaladie());
