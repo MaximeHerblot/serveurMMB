@@ -31,10 +31,7 @@ class ModificationPatientController extends AbstractController
         //Récupérer les maladies en post 
         //transforme string(json) en tableau
         //->setMaladie(tableau juste créer)
-        
-        return $this->render('modification_patient/index.html.twig', [
-            'controller_name' => 'ModificationPatientController',
-        ]);
+        return new Response($patient->getId());
     }
     /**
      * @Route("/modification/patient/recuperation", name="app_modification_patient_retreive")
