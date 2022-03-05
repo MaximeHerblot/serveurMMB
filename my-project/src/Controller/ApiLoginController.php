@@ -35,7 +35,11 @@ class ApiLoginController extends AbstractController
         
         $userRepo = $doctrine->getRepository(User::class);
         $user = $userRepo->findOneBy(['username'=> $username]);
-        
+        if ($user === null){
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED); 
+        }
         //check mdp 
         $passwordUser = $user->getPassword();
         $passhash = md5($password);
