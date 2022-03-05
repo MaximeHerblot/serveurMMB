@@ -17,7 +17,7 @@ class CreationPatientController extends AbstractController
     /**
      * @Route("/creation/patient", name="app_creation_patient")
      */
-    public function index(UserPasswordHasherInterface $passwordHasher, ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
         // $user = new User();
         $em = $doctrine->getManager();

@@ -43,7 +43,7 @@ class Patient
     private $maladie = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="patients")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="patients")
      * @ORM\JoinColumn(nullable=false)
      */
     private $medecin;

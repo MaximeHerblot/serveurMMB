@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Patient;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonDecode;
 
 class ModificationPatientController extends AbstractController
 {
@@ -18,12 +18,11 @@ class ModificationPatientController extends AbstractController
     {
 
         $token = $_POST["medecinToken"];
-        $userRepo = $doctrine->getRepository(User::class);
         //$repo->findBy(['property'=>value]);
         $idPatient = $_POST["idPatient"];
         $patientRepo = $doctrine->getRepository(Patient::class);
         $patient = $patientRepo->find($idPatient);
-        $maladie = $_POST["maladie"];
+        $maladie = $_POST["lesMaladies"];
         $array = json_decode($maladie, true);
         $patient->setMaladie($array);
         $em = $doctrine->getManager();
@@ -36,5 +35,24 @@ class ModificationPatientController extends AbstractController
         return $this->render('modification_patient/index.html.twig', [
             'controller_name' => 'ModificationPatientController',
         ]);
+    }
+    /**
+     * @Route("/modification/patient/recuperation", name="app_modification_patient_retreive")
+     */
+    public function retreive(ManagerRegistry $doctrine){
+        $post = $_POST;
+        $tokenMedecin = $post['tokenMedecin'];
+        $idPatient = $post['idPatient'];
+
+        $patientRepo = $doctrine->getRepository(Patient::class);
+        $patient = $patientRepo->find($idPatient);
+        // $infoPatient = [
+        //     ''
+        // ]
+        $maladie = $patient->getMaladie();
+        
+        return new JsonResponse($maladie);
+
+        
     }
 }
