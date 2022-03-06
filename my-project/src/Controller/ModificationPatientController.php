@@ -24,6 +24,7 @@ class ModificationPatientController extends AbstractController
         $patient = $patientRepo->find($idPatient);
         $maladie = $_POST["lesMaladies"];
         $array = json_decode($maladie, true);
+        $array = array_filter($array);
         $patient->setMaladie($array);
         $em = $doctrine->getManager();
         $em->persist($patient);
@@ -51,5 +52,18 @@ class ModificationPatientController extends AbstractController
         return new JsonResponse($maladie);
 
         
+    }
+    /**
+     * @Route("/modification/patient/suppression", name="app_modification_patient_delete")
+     */
+    public function delete(ManagerRegistry $doctrine){
+        $idPatient = $_POST['idPatient'];
+        $patientRepo = $doctrine->getRepository(Patient::class);
+        $patient = $patientRepo->find($idPatient);
+        $patient->setMedecin(null);
+        $em = $doctrine->getManager();
+        $em->persist($patient);
+        $em->flush();
+        return new Response($patient->getId());
     }
 }
